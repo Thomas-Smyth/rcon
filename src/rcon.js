@@ -56,15 +56,15 @@ class SourceRCON {
 
     /**
      * Socket connection
-     * @type {net.Socket}
+     * @type {net.Socket?}
      */
-    this.connection = createConnection({
-      host: this.host,
-      port: this.port
-    });
+    this.connection = false;
 
-    this.connection.setTimeout(this.timeout);
-
+    /**
+     * Is socket connected
+     * @type {boolean}
+     */
+    this.connected = false;
     /**
      * Whether server has been authenticated
      * @type {boolean}
@@ -75,14 +75,46 @@ class SourceRCON {
   }
 
   /**
+   * Connect and handle any connection errors
+   * @returns {Promise<void>}
+   * @throws Connection errors
+   */
+  connect() {
+    return new Promise((resolve, reject) => {
+
+      let onError = null;
+
+      this.connection = createConnection({
+        host: this.host,
+        port: this.port
+      }, () => {
+        this.connection.removeEventListener(onError);
+        resolve();
+      });
+
+      onError = (e) => {
+        this.connection.removeEventListener(onError);
+        reject(e);
+      };
+
+      this.connection.addEventListener('error', onError);
+
+      this.connection.setTimeout(this.timeout);
+    })
+  }
+
+  /**
    * Authenticate to server
    * @param {string} password
    * @returns {Promise<void>}
    */
   authenticate(password) {
     return new Promise((resolve, reject) => {
+      if (!this.connected)
+        reject(Error('Not connected'));
+
       if (this.authenticated)
-        reject(Error('Already authenticated'))
+        reject(Error('Already authenticated'));
 
       // Send a authentication packet (0x02)
       this.write(Protocol.SERVERDATA_AUTH, Protocol.ID_AUTH, password)
@@ -171,8 +203,11 @@ class SourceRCON {
       if (!this.connection.writable)
         reject(Error('Unable to write to socket'));
 
+      if (!this.connected)
+        reject(Error('Not connected'));
+
       if (!this.authenticated)
-        reject(Error('Unable to authenticate'));
+        reject(Error('Not authorized'));
 
       this.write(Protocol.SERVERDATA_EXECCOMMAND, Protocol.ID_REQUEST, command, this.encoding)
         .then(data => resolve(data.body.replace(/\n$/, ''))) // Last new line must be gooone
