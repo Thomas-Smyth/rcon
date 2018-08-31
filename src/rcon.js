@@ -81,23 +81,15 @@ class SourceRCON {
    */
   connect() {
     return new Promise((resolve, reject) => {
-
-      let onError = null;
-
       this.connection = createConnection({
         host: this.host,
         port: this.port
       }, () => {
-        this.connection.removeEventListener(onError);
+        this.connection.removeListener(reject);
         resolve();
       });
 
-      onError = (e) => {
-        this.connection.removeEventListener(onError);
-        reject(e);
-      };
-
-      this.connection.addEventListener('error', onError);
+      this.connection.once('error', reject);
 
       this.connection.setTimeout(this.timeout);
     })
