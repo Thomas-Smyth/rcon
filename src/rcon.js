@@ -85,7 +85,7 @@ class SourceRCON {
         host: this.host,
         port: this.port
       }, () => {
-        this.connection.removeListener(reject);
+        this.connection.removeListener('error', reject);
         resolve();
       });
 
