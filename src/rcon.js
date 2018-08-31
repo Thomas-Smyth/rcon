@@ -86,6 +86,7 @@ class SourceRCON {
         port: this.port
       }, () => {
         this.connection.removeListener('error', reject);
+        this.connected = true;
         resolve();
       });
 
@@ -129,6 +130,7 @@ class SourceRCON {
    */
   disconnect() {
     this.authenticated = false;
+    this.connected = false;
     this.connection.destroy();
 
     return new Promise((resolve, reject) => {
