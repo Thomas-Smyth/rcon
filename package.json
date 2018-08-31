@@ -1,6 +1,6 @@
 {
   "name": "@thelarinel/rcon",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "index.js",
   "scripts": {
