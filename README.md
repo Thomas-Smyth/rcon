@@ -1,6 +1,8 @@
 # RCON library for NodeJS
 [According to Valve's RCON specification](https://developer.valvesoftware.com/wiki/Source_RCON_Protocol)
 
+Forked from [RCON-SRCDS](https://github.com/EnriqCG/rcon-srcds) and improved for better error handling
+
 ## Install
 ```console
 npm install rcon-srcds --save
