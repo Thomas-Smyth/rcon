@@ -1,5 +1,5 @@
 {
-  "name": "rcon",
+  "name": "@thelarinel/rcon",
   "version": "1.0.1",
   "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "index.js",
