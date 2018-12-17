@@ -166,6 +166,7 @@ class SourceRCON {
         if (type === Protocol.SERVERDATA_AUTH && decodedPacket.type !== Protocol.SERVERDATA_AUTH_RESPONSE)
           return;
 
+        this.connection.removeListener('data', onData);
         this.connection.removeListener('error', onError); // GC
         resolve(decodedPacket); // Let's return our decoded packet data!
       }
