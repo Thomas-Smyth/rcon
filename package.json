@@ -1,14 +1,11 @@
 {
-  "name": "@thelarinel/rcon",
-  "version": "1.0.4",
+  "name": "@thomas-smyth/rcon",
+  "version": "1.0.5",
   "description": "A modern NodeJS library for the Source RCON Protocol",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Larinel/rcon.git"
+    "url": "git+https://github.com/Thomas-Smyth/rcon.git"
   },
   "keywords": [
     "rcon",
@@ -19,7 +16,7 @@
   "author": "Enrique Carpintero, Bohdan Didyk",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Larinel/rcon/issues"
+    "url": "https://github.com/Thomas-Smyth/rcon/issues"
   },
-  "homepage": "https://github.com/Larinel/rcon#readme"
+  "homepage": "https://github.com/Thomas-Smyth/rcon#readme"
 }
